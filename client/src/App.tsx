@@ -14,7 +14,12 @@ import AdminPage from "@/pages/admin-page";
 import CreateAccountPage from "@/pages/create-account-page";
 import ProfilePage from "@/pages/profile-page";
 import ComplaintsPage from "@/pages/complaints-page";
-import { ProtectedRoute, StaffProtectedRoute, ShopOwnerProtectedRoute, OwnerProtectedRoute } from "./lib/protected-route";
+import {
+  ProtectedRoute,
+  StaffProtectedRoute,
+  ShopOwnerProtectedRoute,
+  OwnerProtectedRoute,
+} from "./lib/protected-route";
 import CreateShopPage from "@/pages/create-shop-page";
 import ShopPage from "@/pages/shop-page";
 import ShopsPage from "@/pages/shops-page";
@@ -48,10 +53,16 @@ function Router() {
         <Route path="/shops" component={ShopsPage} />
         <ProtectedRoute path="/" component={DashboardPage} />
         <StaffProtectedRoute path="/admin" component={AdminPage} />
-        <StaffProtectedRoute path="/create-account" component={CreateAccountPage} />
+        <StaffProtectedRoute
+          path="/create-account"
+          component={CreateAccountPage}
+        />
         <ProtectedRoute path="/profile" component={ProfilePage} />
         <ProtectedRoute path="/complaints" component={ComplaintsPage} />
-        <ShopOwnerProtectedRoute path="/shop-appeal" component={ShopAppealPage} />
+        <ShopOwnerProtectedRoute
+          path="/shop-appeal"
+          component={ShopAppealPage}
+        />
         <ProtectedRoute path="/chats" component={ChatsPage} />
         <ProtectedRoute path="/chats/:id" component={ShopChatPage} />
         <ProtectedRoute path="/notifications" component={NotificationsPage} />
@@ -60,14 +71,32 @@ function Router() {
         <OwnerProtectedRoute path="/create-shop" component={CreateShopPage} />
         <Route path="/shops/:id" component={ShopPage} />
         <ProtectedRoute path="/shops/:id/staff" component={StaffShopPage} />
-        <ShopOwnerProtectedRoute path="/shops/:id/edit" component={EditShopPage} />
-        <ShopOwnerProtectedRoute path="/shops/:id/products/create" component={CreateProductPage} />
+        <ShopOwnerProtectedRoute
+          path="/shops/:id/edit"
+          component={EditShopPage}
+        />
+        <ShopOwnerProtectedRoute
+          path="/shops/:id/products/create"
+          component={CreateProductPage}
+        />
         <Route path="/products/:id" component={ProductPage} />
-        <ShopOwnerProtectedRoute path="/products/:id/edit" component={EditProductPage} />
-        <ShopOwnerProtectedRoute path="/manage-shops" component={ManageShopsPage} />
-        <ShopOwnerProtectedRoute path="/manage-products" component={ManageProductsPage} />
+        <ShopOwnerProtectedRoute
+          path="/products/:id/edit"
+          component={EditProductPage}
+        />
+        <ShopOwnerProtectedRoute
+          path="/manage-shops"
+          component={ManageShopsPage}
+        />
+        <ShopOwnerProtectedRoute
+          path="/manage-products"
+          component={ManageProductsPage}
+        />
         <StaffProtectedRoute path="/banned-names" component={BannedNamesPage} />
-        <StaffProtectedRoute path="/site-settings" component={SiteSettingsPage} />
+        <StaffProtectedRoute
+          path="/site-settings"
+          component={SiteSettingsPage}
+        />
         <Route path="/users/:id" component={UserProfilePage} />
         <StaffProtectedRoute path="/users/:id/edit" component={UserEditPage} />
         <Route component={NotFoundPage} />
@@ -79,10 +108,10 @@ function Router() {
 // Компонент с плавающей кнопкой корзины, который не отображается на странице авторизации
 function FloatingCartWithLocation() {
   const [location] = useLocation();
-  const isAuthPage = location === '/auth';
-  
+  const isAuthPage = location === "/auth";
+
   if (isAuthPage) return null;
-  
+
   return <FloatingCartButton />;
 }
 

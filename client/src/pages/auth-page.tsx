@@ -15,15 +15,19 @@ import { useEffect, useState } from "react";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 // Расширяем схему для формы регистрации
-const extendedRegisterSchema = z.object({
-  username: z.string().min(3, "Логин должен содержать минимум 3 символа"),
-  displayName: z.string().min(2, "Имя должно содержать минимум 2 символа"),
-  password: z.string().min(6, "Пароль должен содержать минимум 6 символов"),
-  confirmPassword: z.string().min(6, "Пароль должен содержать минимум 6 символов"),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Пароли не совпадают",
-  path: ["confirmPassword"],
-});
+const extendedRegisterSchema = z
+  .object({
+    username: z.string().min(3, "Логин должен содержать минимум 3 символа"),
+    displayName: z.string().min(2, "Имя должно содержать минимум 2 символа"),
+    password: z.string().min(6, "Пароль должен содержать минимум 6 символов"),
+    confirmPassword: z
+      .string()
+      .min(6, "Пароль должен содержать минимум 6 символов"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Пароли не совпадают",
+    path: ["confirmPassword"],
+  });
 
 type RegisterFormData = z.infer<typeof extendedRegisterSchema>;
 
@@ -36,8 +40,10 @@ export default function AuthPage() {
 
   // Проверяем системную тему при загрузке страницы
   useEffect(() => {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    setTheme(prefersDark ? 'dark' : 'light');
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    setTheme(prefersDark ? "dark" : "light");
   }, [setTheme]);
 
   // Используем типизацию для формы
@@ -58,7 +64,7 @@ export default function AuthPage() {
       displayName: "",
       password: "",
       confirmPassword: "",
-    }
+    },
   });
 
   const handleLogin = async (data: any) => {
@@ -101,28 +107,31 @@ export default function AuthPage() {
           <div className="absolute top-4 right-4">
             <ThemeToggle />
           </div>
-          
+
           {loginError && (
             <div className="mb-4 p-4 border border-destructive rounded-md bg-destructive/10 text-destructive">
               <h3 className="font-bold mb-2">Ваш аккаунт был заблокирован!</h3>
               <p className="text-sm mb-1">
-                <span className="font-semibold">Причина:</span> {loginError.includes("Reason:") 
-                  ? loginError.split("Reason:")[1].split(",")[0].trim() 
+                <span className="font-semibold">Причина:</span>{" "}
+                {loginError.includes("Reason:")
+                  ? loginError.split("Reason:")[1].split(",")[0].trim()
                   : "Нарушение правил сайта"}
               </p>
               <p className="text-sm mb-1">
-                <span className="font-semibold">Дата блокировки:</span> {loginError.includes("Date:") 
-                  ? loginError.split("Date:")[1].split(",")[0].trim() 
+                <span className="font-semibold">Дата блокировки:</span>{" "}
+                {loginError.includes("Date:")
+                  ? loginError.split("Date:")[1].split(",")[0].trim()
                   : new Date().toLocaleDateString()}
               </p>
               <p className="text-sm">
-                <span className="font-semibold">Время бана:</span> {loginError.includes("Duration:") 
-                  ? loginError.split("Duration:")[1].trim() 
+                <span className="font-semibold">Время бана:</span>{" "}
+                {loginError.includes("Duration:")
+                  ? loginError.split("Duration:")[1].trim()
                   : "Бессрочно"}
               </p>
             </div>
           )}
-          
+
           <Tabs defaultValue="login">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="login">Вход</TabsTrigger>
@@ -156,10 +165,13 @@ export default function AuthPage() {
                   className="w-full"
                   disabled={loginMutation.isLoading}
                   onClick={() => {
-                    if (!loginMutation.isLoading && loginForm.formState.isValid) {
+                    if (
+                      !loginMutation.isLoading &&
+                      loginForm.formState.isValid
+                    ) {
                       // Redirect to homepage after successful login
                       setTimeout(() => {
-                        window.location.href = '/';
+                        window.location.href = "/";
                       }, 500);
                     }
                   }}
@@ -182,7 +194,7 @@ export default function AuthPage() {
                     {registerError}
                   </div>
                 )}
-              
+
                 <div className="space-y-2">
                   <Label htmlFor="reg-username">Желаемый логин</Label>
                   <Input
@@ -191,10 +203,12 @@ export default function AuthPage() {
                     autoComplete="username"
                   />
                   {registerForm.formState.errors.username && (
-                    <p className="text-destructive text-xs mt-1">{registerForm.formState.errors.username.message}</p>
+                    <p className="text-destructive text-xs mt-1">
+                      {registerForm.formState.errors.username.message}
+                    </p>
                   )}
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="reg-displayName">Отображаемое имя</Label>
                   <Input
@@ -202,10 +216,12 @@ export default function AuthPage() {
                     {...registerForm.register("displayName")}
                   />
                   {registerForm.formState.errors.displayName && (
-                    <p className="text-destructive text-xs mt-1">{registerForm.formState.errors.displayName.message}</p>
+                    <p className="text-destructive text-xs mt-1">
+                      {registerForm.formState.errors.displayName.message}
+                    </p>
                   )}
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="reg-password">Пароль</Label>
                   <Input
@@ -215,10 +231,12 @@ export default function AuthPage() {
                     autoComplete="new-password"
                   />
                   {registerForm.formState.errors.password && (
-                    <p className="text-destructive text-xs mt-1">{registerForm.formState.errors.password.message}</p>
+                    <p className="text-destructive text-xs mt-1">
+                      {registerForm.formState.errors.password.message}
+                    </p>
                   )}
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="reg-confirmPassword">Повторите пароль</Label>
                   <Input
@@ -228,10 +246,12 @@ export default function AuthPage() {
                     autoComplete="new-password"
                   />
                   {registerForm.formState.errors.confirmPassword && (
-                    <p className="text-destructive text-xs mt-1">{registerForm.formState.errors.confirmPassword.message}</p>
+                    <p className="text-destructive text-xs mt-1">
+                      {registerForm.formState.errors.confirmPassword.message}
+                    </p>
                   )}
                 </div>
-                
+
                 <Button
                   type="submit"
                   className="w-full"
